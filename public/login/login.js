@@ -12,6 +12,8 @@ const warningText = document.querySelector('.warning-text');
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
 const loginForm = document.querySelector('.login');
+const leftImg = document.querySelector('.left-img');
+const footerLinks = document.querySelector('.footer-links')
 const navContainer = document.querySelector('.login-nav');
 const loginTooltip = document.querySelector('.tooltip');
 // Buttons
@@ -21,6 +23,8 @@ const btnLoan = document.querySelector('.form__btn--loan');
 const btnClose = document.querySelector('.form__btn--close');
 const btnSort = document.querySelector('.btn--sort');
 const btnLogout = document.querySelector('.logout');
+const btnEyeClosed = document.getElementById("eyeClosed");
+const btnEyeOpen = document.getElementById("eyeOpen");
 // Inputs
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--password');
@@ -29,6 +33,7 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+const inputPassword = document.querySelector(".login__input.login__input--password");
 // Implement Login
 let currentAccount, timing;
 // Loan
@@ -161,36 +166,9 @@ const calcDisplaySum = function (acc) {
         .reduce((acc, int) => acc + int, 0);
     labelSumInterest.textContent = formatCurrency(interest, acc.locale, acc.currency);
 };
-//Logout timer
-const startLogoutTimer = function () {
-    const tick = function () {
-        const mins = String(Math.trunc(timer / 60)).padStart(2, '0');
-        const secs = String(timer % 60).padStart(2, '0');
-        labelTimer.textContent = `${mins}:${secs}`;
-        //Logout once we reach 0
-        if (timer === 0) {
-            clearInterval(timing);
-            labelWelcome.textContent = 'Log in to get started';
-            containerApp.style.display = 'none';
-            loginTooltip.style.display = 'block';
-            loginForm.style.display = 'flex';
-            navContainer.style.marginTop = '10%';
-        }
-        timer--;
-    };
-    //set time to 5 min
-    let timer = 100;
-    tick();
-    const timing = setInterval(tick, 1000);
-    return timing;
-};
-//Lougout with logout button
+//Logout
 btnLogout.addEventListener('click', function () {
-    labelWelcome.textContent = 'Log in to get started';
-    containerApp.style.display = 'none';
-    loginForm.style.display = 'flex';
-    loginTooltip.style.display = 'block';
-    navContainer.style.marginTop = '10%';
+    window.location.href = '../index.html'; 
 });
 // Login functionality
 btnLogin.addEventListener('click', function (e) {
@@ -228,10 +206,13 @@ btnLogin.addEventListener('click', function (e) {
         warningText.textContent = ' ';
         if ((currentAccount === null || currentAccount === void 0 ? void 0 : currentAccount.pin) === Number(inputLoginPin.value)) {
             labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}!`;
-            //Show hidden container
+            //Show hidden container & Hide Login
             loginForm.style.display = 'none';
+            footerLinks.style.display = 'none';
+            leftImg.style.display = 'none';
             containerApp.style.display = 'grid';
             loginTooltip.style.display = 'none';
+            navContainer.style.marginLeft = '0%';
             navContainer.style.marginTop = '5%';
             //Create current date
             const now = new Date();
@@ -245,14 +226,21 @@ btnLogin.addEventListener('click', function (e) {
             //Clear input
             inputLoginUsername.value = inputLoginPin.value = '';
             inputLoginPin.blur();
-            //clear time if it started on another acc
-            if (timing)
-                clearInterval(timing);
-            //Start logout
-            timing = startLogoutTimer();
         }
     }
 });
+//Show and hide password functionality
+function togglePassword() {
+    if (inputPassword.type === "password") {
+        inputPassword.type = "text";
+        btnEyeClosed.style.display = "none";
+        btnEyeOpen.style.display = "inline-block";
+    } else {
+        inputPassword.type = "password";
+        btnEyeClosed.style.display = "inline-block";
+        btnEyeOpen.style.display = "none";
+    }
+  }
 //Tranfer money functionality
 btnTransfer.addEventListener('click', function (e) {
     e.preventDefault();

@@ -1,4 +1,4 @@
-.left-cover {
+.left-img {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,12 +10,11 @@
   align-items: center;
 }
 
-.left-cover img {
+.left-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 
 .login-nav {
   display: flex;
@@ -158,6 +157,7 @@
   color: inherit;
   cursor: pointer;
   transition: all 0.3s;
+  margin-top: -52px;
 }
 
 .login__btn:hover,
@@ -166,6 +166,48 @@
 .btn--sort:focus {
   outline: none;
   color: var(--color-primary);
+}
+
+.show-password {
+  height: 3.5rem;
+  cursor: pointer;
+  position: relative;
+  margin-left: -355px; 
+}
+
+.footer-links {
+  background-color: #dcdada !important;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 880px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10%;
+  height: 133px !important; 
+}
+
+.footer-link {
+  position: absolute;
+  top: 45%;
+  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  color: var(--color-primary-darker);
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #00a919;
+}
+
+.footer-link.left {
+  left: 180px !important;
+}
+
+.footer-link.right {
+  right: 320px !important;
 }
 
 /* MAIN */
